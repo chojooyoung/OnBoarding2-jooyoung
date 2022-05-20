@@ -18,9 +18,10 @@ interface PostType {
   fetchPostList: () => void;
   fetchAddPost: (addPostData: PostBody) => void;
   fetchPostGetById: (postId: number) => void;
-  addPost: (responsePostData: PostBody) => void;
+  deletePostById: (postId: number) => void;
+  addPost: (responsePostData: Post) => void;
   deletePost: (id: number) => void;
-  getDataById: (postResponse: Post) => void;
+  setDataById: (postResponse: Post) => void;
   modifyPostSucess: (postResponse: Post) => void;
 }
 
@@ -48,23 +49,21 @@ export const PostStore = makeAutoObservable<PostType>({
     const postInfo = addPostData;
     try {
       const response: Post = yield API.createPost(postInfo);
-      console.log(response);
       this.addPost(response);
-      console.log(this.postData);
       this.loading = false;
     } catch (err) {
       this.error = err;
       this.loading = false;
     }
   },
+
   *fetchPostGetById(postId: number) {
     // flow
-    this.loading = true;
     const param = { id: postId };
     try {
       const response: Post = yield API.getPostById(param);
       console.log(response);
-      this.getDataById(response);
+      this.setDataById(response);
       console.log(this.postData);
       this.loading = false;
     } catch (err) {
@@ -73,14 +72,29 @@ export const PostStore = makeAutoObservable<PostType>({
     }
   },
 
-  addPost(responsePostData: PostBody) {
+  *deletePostById(postId: number) {
+    // flow
+    const param = { id: postId };
+    try {
+      const response: Post = yield API.deletePost(param);
+      console.log(response);
+      this.deletePost(param.id);
+      console.log(this.postData);
+      this.loading = false;
+    } catch (err) {
+      this.error = err;
+      this.loading = false;
+    }
+  },
+
+  addPost(responsePostData: Post) {
     this.postData.push({
-      id: 1,
+      id: responsePostData.id,
       title: responsePostData.title,
       body: responsePostData.body,
     });
   },
-  getDataById(responsePostData: Post) {
+  setDataById(responsePostData: Post) {
     const index = this.postData.findIndex(
       (post) => post.id === responsePostData.id
     );

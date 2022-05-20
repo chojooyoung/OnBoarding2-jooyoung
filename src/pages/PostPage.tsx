@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import PostListForm from "@components/PostListForm";
 import PostList from "@components/PostList";
 import Divider from "@components/Divider";
-import { RootState } from "../state";
 import useStores from "../useStore";
 import { observer } from "mobx-react";
 

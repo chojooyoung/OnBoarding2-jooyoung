@@ -23,7 +23,7 @@ function PostItem({ post }: Props) {
   const handleDeletePost = useCallback(
     (param: param) => {
       setLoading(true);
-      const { deletePost } = PostStore;
+      PostStore.deletePostById(param.id);
       setLoading(false);
     },
     [PostStore]

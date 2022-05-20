@@ -1,8 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import styled from "@emotion/styled";
 import CardForm from "@components/CardForm";
-
+import useStore from "../../useStore";
 function HomeText() {
+  const { PostStore } = useStore();
+
   return (
     <HomeTextWrapper>
       <CardForm>
@@ -34,6 +36,7 @@ function HomeText() {
           - 게시글 목록 옆 "delete" 버튼을 클릭하여 게시글을 삭제 할 수
           있습니다.
         </div>
+        <div>{PostStore.postData.length}</div>
       </CardForm>
     </HomeTextWrapper>
   );

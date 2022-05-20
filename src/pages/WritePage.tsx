@@ -20,9 +20,8 @@ function WritePage() {
   const onSubmit = async (values: { title: string; body: string }) => {
     setLoading(true);
     await PostStore.fetchAddPost(values);
-    const latestPostId =
-      PostStore.postData[PostStore.postData.length - 1].id + 1;
-    // navigate(`/post/${latestPostId}`);
+    const latestPostId = PostStore.postData[PostStore.postData.length - 1].id;
+    navigate(`/post/${latestPostId}`);
     setLoading(false);
   };
 
