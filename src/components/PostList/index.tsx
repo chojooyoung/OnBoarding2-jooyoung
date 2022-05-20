@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux";
-import { RootState } from "src/state";
 import PostItem from "../PostItem";
 import Spinner from "../Spinner";
+import useStore from "../../useStore";
+import { useEffect } from "react";
 
 function PostList() {
-  const { data, loading } = useSelector(
-    (store: RootState) => store.postsReducer,
-  );
+  const { PostStore } = useStore();
+  const { postData, loading } = PostStore;
 
   return (
     <div>
@@ -15,7 +14,7 @@ function PostList() {
         <Spinner />
       ) : (
         <PostListUl>
-          {data.map((post) => {
+          {postData.map((post) => {
             return <PostItem key={post.id} post={post} />;
           })}
         </PostListUl>

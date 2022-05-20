@@ -4,29 +4,25 @@ import { useNavigate } from "react-router-dom";
 import PostForm from "@components/PostForm";
 import { postsAction } from "../state/posts";
 import { RootState } from "../state";
+import useStore from "../useStore";
+import { useObserver } from "mobx-react";
 
 function WritePage() {
-  const navigate = useNavigate();
+  const { PostStore } = useStore();
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    PostStore.fetchPostList();
+  });
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-  const currentyPostList = useSelector((state: RootState) => {
-    return state.postsReducer.data;
-  });
-
-  useEffect(() => {
-    const { getData } = postsAction;
-    dispatch(getData({ post: "post" }));
-  }, []);
-
   const onSubmit = async (values: { title: string; body: string }) => {
     setLoading(true);
-    const { createPost } = postsAction;
-    await dispatch(createPost(values));
-    const latestPostId = currentyPostList[currentyPostList.length - 1].id + 1;
-    navigate(`/post/${latestPostId}`);
+    await PostStore.fetchAddPost(values);
+    const latestPostId =
+      PostStore.postData[PostStore.postData.length - 1].id + 1;
+    // navigate(`/post/${latestPostId}`);
     setLoading(false);
   };
 

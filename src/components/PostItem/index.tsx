@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import Spinner from "../Spinner";
 import Button from "../Button";
 import { Post, postsAction } from "../../state/posts";
+import useStore from "../../useStore";
 
 interface Props {
   post: Post;
@@ -13,7 +13,7 @@ interface param {
   id: number;
 }
 function PostItem({ post }: Props) {
-  const dispatch = useDispatch();
+  const { PostStore } = useStore();
 
   const param = {
     id: post.id,
@@ -23,11 +23,10 @@ function PostItem({ post }: Props) {
   const handleDeletePost = useCallback(
     (param: param) => {
       setLoading(true);
-      const { deletePostById } = postsAction;
-      dispatch(deletePostById(param));
+      const { deletePost } = PostStore;
       setLoading(false);
     },
-    [dispatch],
+    [PostStore]
   );
   return (
     <PostInfo>
