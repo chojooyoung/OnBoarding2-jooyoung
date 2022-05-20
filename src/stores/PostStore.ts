@@ -18,6 +18,7 @@ interface PostType {
   fetchPostList: () => void;
   fetchAddPost: (addPostData: PostBody) => void;
   fetchPostGetById: (postId: number) => void;
+  fetchPostModify: (modifyData: Post) => void;
   deletePostById: (postId: number) => void;
   addPost: (responsePostData: Post) => void;
   deletePost: (id: number) => void;
@@ -77,10 +78,18 @@ export const PostStore = makeAutoObservable<PostType>({
     const param = { id: postId };
     try {
       const response: Post = yield API.deletePost(param);
-      console.log(response);
       this.deletePost(param.id);
-      console.log(this.postData);
       this.loading = false;
+    } catch (err) {
+      this.error = err;
+      this.loading = false;
+    }
+  },
+
+  *fetchPostModify(modifyData: Post) {
+    try {
+      const response: Post = yield API.modyfyPost(modifyData);
+      this.modifyPostSucess(response);
     } catch (err) {
       this.error = err;
       this.loading = false;

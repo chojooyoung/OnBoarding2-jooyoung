@@ -1,36 +1,30 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { postsAction } from "../state/posts";
-import { RootState } from "../state";
 import ModyFyForm from "../components/ModifyForm";
+import useStore from "../useStore";
 
 function ModifyPage() {
   const { postId } = useParams<{ postId: any }>();
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const { PostStore } = useStore();
 
-  const post = useSelector((state: RootState) => {
-    return state.postsReducer.data.find(
-      (post) => post.id === parseInt(postId, 10),
-    );
-  });
+  const post = PostStore.postData.find(
+    (post) => post.id === parseInt(postId, 10)
+  );
 
   useEffect(() => {
-    const { getData } = postsAction;
-    dispatch(getData({ post: "post" }));
-  }, []);
+    PostStore.fetchPostList();
+  }, [PostStore]);
 
   const onSubmit = async (values: { title: string; body: string }) => {
-    const { modifyPost } = postsAction;
     const modifyData = {
       title: values.title,
       body: values.body,
       id: postId,
     };
-    await dispatch(modifyPost(modifyData));
+    PostStore.fetchPostModify(modifyData);
     navigate(`/post/${postId}`);
   };
 

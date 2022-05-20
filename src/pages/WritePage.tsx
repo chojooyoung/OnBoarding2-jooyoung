@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PostForm from "@components/PostForm";
-import { postsAction } from "../state/posts";
-import { RootState } from "../state";
 import useStore from "../useStore";
-import { useObserver } from "mobx-react";
 
 function WritePage() {
   const { PostStore } = useStore();
