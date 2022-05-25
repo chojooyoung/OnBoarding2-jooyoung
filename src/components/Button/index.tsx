@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
+import tw from "twin.macro";
 
 interface Props {
   // eslint-disable-next-line react/require-default-props
@@ -13,14 +14,16 @@ interface Props {
 
 function Button({ type, onClick, disabled, className, children }: Props) {
   return (
-    <CommonButton
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={className}
-    >
-      {children}
-    </CommonButton>
+    <div>
+      <CommonButton
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+        className={className}
+      >
+        {children}
+      </CommonButton>
+    </div>
   );
 }
 

@@ -1,8 +1,11 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled/macro";
+import tw from "twin.macro";
 
-const Divider = styled.div`
-  border-bottom: solid 0.1px black;
-  width: 100%;
-`;
+const Divider = styled.div([
+  tw`
+w-full
+border-b
+`,
+]);
 
 export default Divider;

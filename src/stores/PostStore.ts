@@ -33,7 +33,6 @@ export const PostStore = makeAutoObservable<PostType>({
 
   *fetchPostList() {
     // flow
-    console.log("fetch");
     this.loading = true;
     const param = { post: "post" };
     try {

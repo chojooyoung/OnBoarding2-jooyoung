@@ -6,6 +6,11 @@ const { pathsToModuleNameMapper } = require("ts-jest");
 const { compilerOptions } = require("./tsconfig.paths.json");
 
 module.exports = {
+  style: {
+    postOptions: {
+      plugins: [require("tailwindcss"), require("autoprefixer")],
+    },
+  },
   babel: {
     presets: [
       "@emotion/babel-preset-css-prop",

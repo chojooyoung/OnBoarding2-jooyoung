@@ -36,11 +36,11 @@ function ModifyForm({ onSubmit, defaultValue }: any) {
       {errors.title && <span style={{ color: "red" }}>{errors.title}</span>}
       <div>
         <textarea
+          className="w-full h-72 mt-2 border border-solid border-black rounded-md"
           name="body"
           placeholder="내용"
           defaultValue={defaultValue.body}
           onChange={handleChange}
-          style={{ width: "100%", height: "300px", marginTop: 8 }}
           required
         />
       </div>
